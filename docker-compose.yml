@@ -1,0 +1,43 @@
+services:
+  # ============================================================================
+  # PostgreSQL with pgvector Extension
+  # Why: ArcFace produces 512-dimensional vector embeddings for each face.
+  # pgvector enables high-dimensional vector storage and ultra-fast similarity
+  # search (cosine distance) directly in PostgreSQL via HNSW/IVFFlat indexes.
+  # ============================================================================
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: cctv_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-cctv_attendance}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/database/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cctv_attendance"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================================
+  # Redis Cache & Dedup Service
+  # Why: Avoids duplicate database writes when a student is recognized continuously
+  # across 30 FPS video frames within the same classroom lecture period.
+  # ============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: cctv_redis
+    restart: always
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:

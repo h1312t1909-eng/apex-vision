@@ -1,0 +1,34 @@
+# ==============================================================================
+# CCTV Automated Student Attendance System - Backend Dependencies
+# ==============================================================================
+
+# Web Framework & Server
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+websockets>=12.0
+python-multipart>=0.0.9
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+email-validator>=2.1.0
+
+# Database & Vector Operations
+sqlalchemy>=2.0.28
+psycopg2-binary>=2.9.9
+pgvector>=0.2.5
+alembic>=1.13.1
+redis>=5.0.3
+
+# Computer Vision & Deep Learning
+opencv-python-headless>=4.9.0.80
+numpy>=1.26.0
+onnxruntime>=1.17.0
+insightface>=0.7.3
+
+# Excel & PDF Report Generation
+openpyxl>=3.1.2
+reportlab>=4.1.0
+pandas>=2.2.0
+
+# Utility & Configuration
+python-dotenv>=1.0.1
+requests>=2.31.0

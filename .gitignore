@@ -1,0 +1,27 @@
+# Env
+.env
+.env.*
+!.env.example
+
+# Uploaded files (local storage provider). Anchored: app/files/storage/ is source code.
+/backend/storage/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
